@@ -57,5 +57,26 @@ public class TestParkingLot {
             Assert.assertEquals(available, Parkinglot_JDBC.Total_slots());
         }
     }
+    //uc5-Availablity of slots
+    @Test
+    public void TestAvailablity_Parking_Lot(){
+        List<List<String>> arr=new ArrayList<>();
+        arr.add(List.of("2","aakash","10:59:39","general"));
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        arr.add(List.of("1","lot1","60","60"));
+        int available=parkingLot.getCapacity()-arr.size()+1;
+        if(available ==0){
+            Assert.assertEquals(0,Parkinglot_JDBC.Total_slots());
+            Security security=new Security(1,"aaaa");
+            String message= (String) security.update();
+            Assert.assertEquals("Parking lot is full. Redirecting security staff.",message);
+            System.out.println("the lot is full...");
+        }
+        else {
+            Assert.assertEquals(available, Parkinglot_JDBC.Total_slots());
+            System.out.println("Available slots:"+Parkinglot_JDBC.Total_slots());
+        }
+
+    }
 
 }
