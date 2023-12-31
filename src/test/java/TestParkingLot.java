@@ -24,4 +24,20 @@ public class TestParkingLot {
         arr.add(List.of("2","aakash","10:59:39","general"));
         Assert.assertEquals(arr,Parkinglot_JDBC.Display());
     }
+    //notify if parkinglot is full
+    @Test
+    public  void  TestParkingFull(){
+        List<List<String>> arr=new ArrayList<>();
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        arr.add(List.of("1","lot1","60","60"));
+        int available=parkingLot.getCapacity()-arr.size();
+        if(available ==0){
+            Assert.assertEquals(0,Parkinglot_JDBC.Total_slots());
+            System.out.println("the lot is full...");
+        }
+        else {
+            Assert.assertEquals(available, Parkinglot_JDBC.Total_slots());
+        }
+    }
+
 }

@@ -57,4 +57,44 @@ public class Parkinglot_JDBC {
             throw new RuntimeException(e);
         }
     }
+    //insert into parking lot owner
+    public static void insertParkinglotOwner(ParkingLot_Owner parkingLotOwner){
+        Connection connection=null;
+        try {
+            connection = Sql_connection.getCon();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO  ParkingLotOwner VALUES(?,?)");
+            ps.setInt(1,parkingLotOwner.getOwnerId());
+            ps.setString(2,parkingLotOwner.getOwnerName());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //notify if parkinglotfull or not
+    //number of slots parked
+    public static int Total_slots(){
+        Connection connection=null;
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps=connection.prepareStatement("SELECT COUNT(*) AS row_count FROM Driver1 ");
+            ResultSet resultSet=ps.executeQuery();
+            int rowcount = 0;
+            if(resultSet.next()) {
+                rowcount = resultSet.getInt("row_count");
+                System.out.println("the total number of slots filled" + rowcount);
+            }
+            parkingLot.setAvailablespace(parkingLot.getCapacity()-rowcount);
+            if (parkingLot.getAvailablespace()==0){
+                System.out.println("The parkings are full");
+            }
+            else {
+                System.out.println("The number of slots availabe:"+parkingLot.getAvailablespace());
+            }
+            return parkingLot.getAvailablespace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
