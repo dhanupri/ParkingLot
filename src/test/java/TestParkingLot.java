@@ -9,9 +9,19 @@ public class TestParkingLot {
     public void TestParkingCheck(){
         List<List<String>> arr=new ArrayList<>();
         Driver driver=new Driver(1,"arvind","10:57:39","general");
+        Driver driver1=new Driver(2,"aakash","10:59:39","general");
         arr.add(List.of("1","arvind","10:57:39","general"));
+        arr.add(List.of("2","aakash","10:59:39","general"));
         Parkinglot_JDBC.insertParking_details(driver);
-
+        Parkinglot_JDBC.insertParking_details(driver1);
+        Assert.assertEquals(arr,Parkinglot_JDBC.Display());
+    }
+    //uc2 -unpark
+    @Test
+    public void TestUnPark(){
+        Parkinglot_JDBC.Delete(1);
+        List<List<String>> arr=new ArrayList<>();
+        arr.add(List.of("2","aakash","10:59:39","general"));
         Assert.assertEquals(arr,Parkinglot_JDBC.Display());
     }
 }

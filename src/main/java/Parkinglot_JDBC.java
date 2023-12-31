@@ -45,4 +45,16 @@ public class Parkinglot_JDBC {
 
         return null;
     }
+    //delete the detail using a slot number
+    public static void Delete(int diverId) {
+        Connection connection = null;
+        try {
+            connection = Sql_connection.getCon();
+            PreparedStatement ps = connection.prepareStatement("delete from Driver1 where DriverId=?");
+            ps.setInt(1, diverId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
