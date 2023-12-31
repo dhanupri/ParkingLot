@@ -39,5 +39,23 @@ public class TestParkingLot {
             Assert.assertEquals(available, Parkinglot_JDBC.Total_slots());
         }
     }
+    //notify if parkinglot is full
+    @Test
+    public  void  TestRedirectToSecurity(){
+        List<List<String>> arr=new ArrayList<>();
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        arr.add(List.of("1","lot1","60","60"));
+        int available=parkingLot.getCapacity()-arr.size();
+        if(available ==0){
+            Assert.assertEquals(0,Parkinglot_JDBC.Total_slots());
+            Security security=new Security(1,"aaaa");
+            String message= (String) security.update();
+            Assert.assertEquals("Parking lot is full. Redirecting security staff.",message);
+            System.out.println("the lot is full...");
+        }
+        else {
+            Assert.assertEquals(available, Parkinglot_JDBC.Total_slots());
+        }
+    }
 
 }
