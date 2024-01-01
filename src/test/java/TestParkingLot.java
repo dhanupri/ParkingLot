@@ -83,10 +83,16 @@ public class TestParkingLot {
     public  void TestCarParked(){
         Assert.assertEquals("parked successfully",Parkinglot_JDBC.parkcar("tn1234","1","1"));
     }
-    //uc-find my car
+    //uc7-find my car
     @Test
     public void TestToFindTheParkedCar(){
         Assert.assertEquals(1,Parkinglot_JDBC.FindParkedCar("tn1234"));
     }
+    //uc8-intime
+    @Test
+    public void TestInTimeOfParkedCar(){
+        Assert.assertEquals("07:18:58",Parkinglot_JDBC.FindwhenCarparked("tn1234"));
+    }
+
 
 }

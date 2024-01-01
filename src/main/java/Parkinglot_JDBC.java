@@ -157,5 +157,24 @@ public class Parkinglot_JDBC {
         return 0;
 
     }
+    //find the car
+    public  static String FindwhenCarparked(String car_no){
+        Connection connection=null;
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select inTime from ParkingCars where carId=?");
+            ps.setString(1,car_no);
+            ResultSet resultSet=ps.executeQuery();
+            if(resultSet.next()){
+                Time inTime=resultSet.getTime("inTime");
+                return String.valueOf(inTime);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+
+    }
 
 }
