@@ -302,5 +302,29 @@ public class Parkinglot_JDBC {
             throw new RuntimeException(e);
         }
     }
+    //find all parked blue toyota cars for a robbery case investigation
+    public static List<List<String>> FindBluToyoto(String color,String type){
+        Connection connection=null;
+        List<List<String >> arr1=new ArrayList<>();
+        try{
+            List<String> arr=new ArrayList<>();
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select * from ParkingCars where car_color =? and car_model =?");
+            ps.setString(1,color);
+            ps.setString(2,type);
+            ResultSet resultSet=ps.executeQuery();
+            while (resultSet.next()){
+                String plateNo=resultSet.getString("carId");
+                int lotId=resultSet.getInt("lotID");
+                arr.add(String.valueOf(lotId));
+                arr.add(plateNo);
+                arr.add(String.valueOf(lotId));
+            }
+            arr1.add(arr);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return arr1;
+    }
 
 }

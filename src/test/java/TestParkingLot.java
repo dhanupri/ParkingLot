@@ -133,4 +133,12 @@ public class TestParkingLot {
         set.add(2);
         Assert.assertEquals(set,Parkinglot_JDBC.FindLocationOfWhiteCars("white"));
     }
+    //uc13 location,plate no of parked  blue toyota
+    @Test
+    public void TestInvestgateARobberyCase(){
+        List<List<String>> arr=new ArrayList<>();
+        List<String> arr1=new ArrayList<>();
+        arr.add(List.of("1","tn1454","1"));
+        Assert.assertEquals(arr,Parkinglot_JDBC.FindBluToyoto("blue","toyoto"));
+    }
 }
