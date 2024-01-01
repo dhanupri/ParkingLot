@@ -1,14 +1,32 @@
 public class ParkingLot {
     public int lotId;
-    public String name;
+    public String name1;
     public int capacity;
     public int availablespace;
+    public String attendentId;
 
-    public ParkingLot(int lotId, String name, int capacity, int availablespace) {
+    public ParkingLot(int lotId, String name1, int capacity, int availablespace,String attendentId) {
         this.lotId = lotId;
-        this.name = name;
+        this.name1 = name1;
         this.capacity = capacity;
         this.availablespace = availablespace;
+        this.attendentId=attendentId;
+    }
+
+    public String getName1() {
+        return name1;
+    }
+
+    public void setName1(String name1) {
+        this.name1 = name1;
+    }
+
+    public String getAttendentId() {
+        return attendentId;
+    }
+
+    public void setAttendentId(String attendentId) {
+        this.attendentId = attendentId;
     }
 
     public int getLotId() {
@@ -19,15 +37,9 @@ public class ParkingLot {
         this.lotId = lotId;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public  int getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 

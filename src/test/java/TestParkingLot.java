@@ -28,7 +28,7 @@ public class TestParkingLot {
     @Test
     public  void  TestParkingFull(){
         List<List<String>> arr=new ArrayList<>();
-        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60,"1");
         arr.add(List.of("1","lot1","60","60"));
         int available=parkingLot.getCapacity()-arr.size();
         if(available ==0){
@@ -43,7 +43,7 @@ public class TestParkingLot {
     @Test
     public  void  TestRedirectToSecurity(){
         List<List<String>> arr=new ArrayList<>();
-        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60,"1");
         arr.add(List.of("1","lot1","60","60"));
         int available=parkingLot.getCapacity()-arr.size();
         if(available ==0){
@@ -62,7 +62,7 @@ public class TestParkingLot {
     public void TestAvailablity_Parking_Lot(){
         List<List<String>> arr=new ArrayList<>();
         arr.add(List.of("2","aakash","10:59:39","general"));
-        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60,"1");
         arr.add(List.of("1","lot1","60","60"));
         int available=parkingLot.getCapacity()-arr.size()+1;
         if(available ==0){
@@ -93,6 +93,23 @@ public class TestParkingLot {
     public void TestInTimeOfParkedCar(){
         Assert.assertEquals("07:18:58",Parkinglot_JDBC.FindwhenCarparked("tn1234"));
     }
+    //uc9-lots distribution
+
+    @Test
+    public void TestLotsDistribution(){
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60,"1");
+        ParkingLot parkingLot1=new ParkingLot(2,"lot2",30,30,"2");
+        ParkingLot parkingLot2=new ParkingLot(3,"lot3",50,50,"3");
+        Parkinglot_JDBC.lotDistributionTable(parkingLot);
+        Parkinglot_JDBC.lotDistributionTable(parkingLot1);
+        Parkinglot_JDBC.lotDistributionTable(parkingLot2);
+        List<List<String>> arr=new ArrayList<>();
+        arr.add( List.of("1","lot1","60","60","1"));
+        arr.add( List.of("2","lot2","30","30","2"));
+        arr.add( List.of("3","lot3","50","50","3"));
+        Assert.assertEquals(arr,Parkinglot_JDBC.DisplayParkinglot_details());
+    }
+
 
 
 }

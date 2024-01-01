@@ -74,7 +74,7 @@ public class Parkinglot_JDBC {
 
     public static int Total_slots(){
         Connection connection=null;
-        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
+        ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60,"1");
         try{
             connection=Sql_connection.getCon();
             PreparedStatement ps=connection.prepareStatement("SELECT COUNT(*) AS row_count FROM Driver1 ");
@@ -175,6 +175,52 @@ public class Parkinglot_JDBC {
         }
         return null;
 
+    }
+
+    //insert in lot distribution table
+    public static void lotDistributionTable(ParkingLot parkingLot){
+        Connection connection=null;
+        try {
+            connection = Sql_connection.getCon();
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO  ParkingLot VALUES(?,?,?,?,?)");
+            ps.setInt(1,parkingLot.getLotId());
+            ps.setString(2,parkingLot.getName1());
+            ps.setInt(3,parkingLot.getCapacity());
+            ps.setInt(4,parkingLot.getAvailablespace());
+            ps.setString(5,parkingLot.getAttendentId());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static List<List<String>> DisplayParkinglot_details() {
+        List<List<String>> arr2 = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            connection = Sql_connection.getCon();
+            Statement ps1 = connection.createStatement();
+            ResultSet resultSet = ps1.executeQuery("select * from ParkingLot ");
+            while (resultSet.next()) {
+                ArrayList<String> arr1 = new ArrayList<>();
+                int lot= resultSet.getInt("lotID");
+                String name=resultSet.getString("name1");
+                String capacity=resultSet.getString("capacity");
+                int availableSpace = resultSet.getInt("availableSpace");
+                String attendentId= resultSet.getString("attendantID");
+                arr1.add(String.valueOf(lot));
+                arr1.add(name);
+                arr1.add(String.valueOf(capacity));
+                arr1.add(String.valueOf(availableSpace));
+                arr1.add(attendentId);
+                arr2.add(arr1);
+            }
+            return arr2;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return arr2;
     }
 
 }
