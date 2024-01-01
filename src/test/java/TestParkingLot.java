@@ -78,5 +78,10 @@ public class TestParkingLot {
         }
 
     }
+    //uc6-parking attendent
+    @Test
+    public  void TestCarParked(){
+        Assert.assertEquals("parked successfully",Parkinglot_JDBC.parkcar("tn1234","1","1"));
+    }
 
 }

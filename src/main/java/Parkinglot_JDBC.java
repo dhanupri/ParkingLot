@@ -71,7 +71,7 @@ public class Parkinglot_JDBC {
         }
     }
     //notify if parkinglotfull or not
-    //number of slots parked
+
     public static int Total_slots(){
         Connection connection=null;
         ParkingLot parkingLot=new ParkingLot(1,"lot1",60,60);
@@ -95,6 +95,47 @@ public class Parkinglot_JDBC {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //Attendent to park the car
+
+    public static String parkcar(String carID, String attendentID, String lotId){
+        Connection connection=null;
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select lotId=? from ParkingLot where attendantID =?");
+            ps.setString(1,"1");
+            ps.setString(2,"1");
+            ResultSet resultSet=ps.executeQuery();
+            if(resultSet.next()){
+                String updateQuery = "UPDATE ParkingLot SET attendantID = ?, availableSpace = availableSpace - 1 WHERE lotID = ?";
+                ps.setString(1,"1");
+                ps.setString(2,"1");
+                try(PreparedStatement updatestatement=connection.prepareStatement(updateQuery)){
+                    updatestatement.setString(1, attendentID);
+                    updatestatement.setString(2, "1");
+                    updatestatement.executeUpdate();
+
+                }
+                String insertQuery="insert into ParkingCars(carID, lotID, inTime)VALUES (?, ?, CURRENT_TIMESTAMP)";
+                try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                    insertStatement.setString(1, carID);
+                    insertStatement.setString(2, "1");
+                    insertStatement.executeUpdate();
+                }
+
+                System.out.println("parked successfully");
+                return "parked successfully";
+            }
+            else{
+                System.out.println("No available parking lot");
+                return  "No available parking lot";
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
