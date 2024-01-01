@@ -117,8 +117,9 @@ public class TestParkingLot {
         Assert.assertEquals("the car is parked to nearest space", Parkinglot_JDBC.handicap(driver,parkingCar));
 
     }
-
-
-
-
+    //uc 11 the highest number of free space
+    @Test
+    public  void TestFindHighestNoFreeSpace(){
+        Assert.assertEquals(1,Parkinglot_JDBC.FindHighestFreeSpace());
+    }
 }

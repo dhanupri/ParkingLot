@@ -243,7 +243,6 @@ public class Parkinglot_JDBC {
                     }
                     else {
                         parkingCar.setSlot(n);
-
                         slot=n;
                         break;
                     }
@@ -263,6 +262,25 @@ public class Parkinglot_JDBC {
             throw new RuntimeException(e);
         }
         return null;
+    }
+    //find highest number of free spaces
+    public static int FindHighestFreeSpace(){
+        Connection connection=null;
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select * from ParkingLot order by availableSpace");
+            ResultSet resultSet=ps.executeQuery();
+            int n=0;
+            int id=0;
+            while (resultSet.next()){
+                n=resultSet.getInt("availableSpace");
+                id=resultSet.getInt("lotID");
+            }
+            System.out.println(id);
+            return id;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
