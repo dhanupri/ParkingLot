@@ -1,9 +1,43 @@
+import java.util.ArrayList;
+
 public class parking_car {
     public String carId;
     public String inTime;
     public int slot;
     public String carmodel;
+    public String color;
+    public String driverType;
     public String lotID;
+
+    public parking_car(String carId, String inTime, int slot, String carmodel, String color, String driverType, String lotID) {
+        this.carId = carId;
+        this.inTime = inTime;
+        this.slot = slot;
+        this.carmodel = carmodel;
+        this.color = color;
+        this.driverType = driverType;
+        this.lotID = lotID;
+    }
+    //    public parking_car(String carId, String inTime, int slot, String carmodel, String color, String lotID) {
+//        this.carId = carId;
+//        this.inTime = inTime;
+//        this.slot = slot;
+//        this.carmodel = carmodel;
+//        this.color = color;
+//        this.lotID = lotID;
+//    }
+
+    public void setCarmodel(String carmodel) {
+        this.carmodel = carmodel;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     public parking_car(String carId, String inTime, int slot, String carmodel, String lotID) {
         this.carId = carId;
@@ -53,4 +87,7 @@ public class parking_car {
     public void setLotID(String lotID) {
         this.lotID = lotID;
     }
+
+
+
 }

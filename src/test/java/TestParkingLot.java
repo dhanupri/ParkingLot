@@ -1,8 +1,11 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TestParkingLot {
     @Test
@@ -121,5 +124,13 @@ public class TestParkingLot {
     @Test
     public  void TestFindHighestNoFreeSpace(){
         Assert.assertEquals(1,Parkinglot_JDBC.FindHighestFreeSpace());
+    }
+    //uc 12 location of all parked white cars
+    @Test
+    public void TestLocationOfParkedWhiteCars() throws SQLException {
+        Set<Integer> set=new HashSet<>();
+        set.add(1);
+        set.add(2);
+        Assert.assertEquals(set,Parkinglot_JDBC.FindLocationOfWhiteCars("white"));
     }
 }

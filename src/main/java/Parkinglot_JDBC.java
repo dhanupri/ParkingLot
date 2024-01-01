@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.mysql.cj.x.protobuf.MysqlxCrud.Order.Direction.DESC;
 
@@ -278,6 +280,24 @@ public class Parkinglot_JDBC {
             }
             System.out.println(id);
             return id;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //to find location of white cars
+    public static Set<Integer> FindLocationOfWhiteCars(String color) throws SQLException {
+       Set<Integer> set=new HashSet<>();
+        Connection connection=null;
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select * from ParkingCars where car_color=? ");
+            ps.setString(1,color);
+            ResultSet resultSet=ps.executeQuery();
+            while(resultSet.next()){
+                int lotid=resultSet.getInt("lotID");
+               set.add(lotid);
+            }
+            return  set;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
