@@ -81,7 +81,7 @@ public class TestParkingLot {
     //uc6-parking attendent
     @Test
     public  void TestCarParked(){
-        Assert.assertEquals("parked successfully",Parkinglot_JDBC.parkcar("tn1234","1","1"));
+        Assert.assertEquals("parked successfully",Parkinglot_JDBC.parkcar("tn1234","1","1","BMW",1));
     }
     //uc7-find my car
     @Test
@@ -109,6 +109,15 @@ public class TestParkingLot {
         arr.add( List.of("3","lot3","50","50","3"));
         Assert.assertEquals(arr,Parkinglot_JDBC.DisplayParkinglot_details());
     }
+    //uc-10 parking handicap vechile
+    @Test
+    public void TestIfHandicapVechileParkedAtNearest(){
+        Driver driver=new Driver(3,"sanjay","10:57:34","handicap");
+        parking_car parkingCar=new parking_car("tn4567","11:11:11",5,"BMW","1");
+        Assert.assertEquals("the car is parked to nearest space", Parkinglot_JDBC.handicap(driver,parkingCar));
+
+    }
+
 
 
 

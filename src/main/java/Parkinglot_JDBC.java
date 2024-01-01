@@ -2,7 +2,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mysql.cj.x.protobuf.MysqlxCrud.Order.Direction.DESC;
+
 public class Parkinglot_JDBC {
+
     public static void insertParking_details(Driver driver){
         Connection connection=null;
         ArrayList<Driver> arr1=new ArrayList<>();
@@ -99,7 +102,7 @@ public class Parkinglot_JDBC {
 
     //Attendent to park the car
 
-    public static String parkcar(String carID, String attendentID, String lotId){
+    public static String parkcar(String carID, String attendentID, String lotId,String carType,int slot){
         Connection connection=null;
         try{
             connection=Sql_connection.getCon();
@@ -117,10 +120,12 @@ public class Parkinglot_JDBC {
                     updatestatement.executeUpdate();
 
                 }
-                String insertQuery="insert into ParkingCars(carID, lotID, inTime)VALUES (?, ?, CURRENT_TIMESTAMP)";
+                String insertQuery="insert into ParkingCars(carID, lotID, slot,cartype,inTime)VALUES (?, ?,?,?, CURRENT_TIMESTAMP)";
                 try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
                     insertStatement.setString(1, carID);
-                    insertStatement.setString(2, "1");
+                    insertStatement.setString(2, lotId);
+                    insertStatement.setInt(3,slot);
+                    insertStatement.setString(4,carType);
                     insertStatement.executeUpdate();
                 }
 
@@ -221,6 +226,43 @@ public class Parkinglot_JDBC {
             e.printStackTrace();
         }
         return arr2;
+    }
+    //driver is a handicap
+    public static String handicap(Driver driver,parking_car parkingCar){
+        Connection connection=null;
+        try {
+            connection=Sql_connection.getCon();
+            int n=1;
+            if(driver.getDriverType().toLowerCase().equals("handicap")){
+                Statement ps = connection.createStatement();
+                ResultSet resultSet = ps.executeQuery("select * from ParkingCars order by slot ");
+                int slot=0;
+                while (resultSet.next()){
+                    if(resultSet.getInt("slot")!=n){
+                        n++;
+                    }
+                    else {
+                        parkingCar.setSlot(n);
+
+                        slot=n;
+                        break;
+                    }
+                }
+                PreparedStatement ps1= connection.prepareStatement(" insert into ParkingCars values(?,?,?,?,?)");
+                ps1.setString(1,parkingCar.getCarId());
+                ps1.setString(2,String.valueOf(parkingCar.getInTime()));
+                ps1.setInt(3,parkingCar.getSlot());
+                ps1.setString(4,parkingCar.getCarmodel());
+                ps1.setString(5,parkingCar.getLotID());
+               ps1.executeUpdate();
+               return "the car is parked to nearest space";
+
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
 }
