@@ -137,5 +137,25 @@ public class Parkinglot_JDBC {
         }
 
     }
+    //find the car
+    public  static int FindParkedCar(String car_no){
+        Connection connection=null;
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select lotID from ParkingCars where carId=?");
+            ps.setString(1,car_no);
+            ResultSet resultSet=ps.executeQuery();
+            if(resultSet.next()){
+                int lotid=resultSet.getInt("lotId");
+                System.out.println("the car no:"+car_no+"is at parking lot:"+lotid);
+                return lotid;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+
+    }
 
 }
