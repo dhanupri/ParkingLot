@@ -161,4 +161,14 @@ public class TestParkingLot {
         Assert.assertEquals(arr,Parkinglot_JDBC.FindCarInTimeInterval());
 
     }
+    //uc16 parked handicapcars
+    @Test
+    public void TestParkedhandicapCars(){
+        List<List<String>> arr=new ArrayList<>();
+        List<String> arr1=new ArrayList<>();
+        arr.add(List.of("tn1234","11:11:11","1","BMW","white","handicap","1"));
+        arr.add(List.of("tn098","12:12:12","2","BMW","white","handicap","1"));
+        Assert.assertEquals(arr,Parkinglot_JDBC.FindHandicap(1,"handicap"));
+
+    }
 }
