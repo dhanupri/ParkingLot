@@ -331,7 +331,6 @@ public class Parkinglot_JDBC {
         Connection connection=null;
         List<List<String >> arr1=new ArrayList<>();
         try{
-
             connection=Sql_connection.getCon();
             PreparedStatement ps= connection.prepareStatement("select * from ParkingCars where car_model =?");
             ps.setString(1,type);
@@ -354,11 +353,42 @@ public class Parkinglot_JDBC {
                 arr.add(String.valueOf(lotId));
                 arr1.add(arr);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return arr1;
     }
+    //comapre the intime with currentTime
+    public static List<List<String>> FindCarInTimeInterval(){
+        Connection connection=null;
+        List<List<String >> arr1=new ArrayList<>();
+        try{
+            connection=Sql_connection.getCon();
+            PreparedStatement ps= connection.prepareStatement("select * from ParkingCars where inTime>= NOW()-INTERVAL 30 MINUTE");
+            ResultSet resultSet=ps.executeQuery();
+            while (resultSet.next()){
+                List<String> arr=new ArrayList<>();
+                String plateNo=resultSet.getString("carId");
+                int lotId=resultSet.getInt("lotID");
+                Time time=resultSet.getTime("inTime");
+                int slot=resultSet.getInt("slot");
+                String type1=resultSet.getString("drivertype");
+                String car_model=resultSet.getString("car_model");
+                String car_color=resultSet.getString("car_color");
+                arr.add(plateNo);
+                arr.add(String.valueOf(time));
+                arr.add(String.valueOf(slot));
+                arr.add(car_model);
+                arr.add(car_color);
+                arr.add(type1);
+                arr.add(String.valueOf(lotId));
+                arr1.add(arr);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return arr1;
+    }
+
 
 }
