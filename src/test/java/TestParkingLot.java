@@ -141,4 +141,13 @@ public class TestParkingLot {
         arr.add(List.of("1","tn1454","1"));
         Assert.assertEquals(arr,Parkinglot_JDBC.FindBluToyoto("blue","toyoto"));
     }
+    //uc13 location, of BMW to increase security
+    @Test
+    public void TestToImproveSecurity(){
+        List<List<String>> arr=new ArrayList<>();
+        List<String> arr1=new ArrayList<>();
+        arr.add(List.of("tn1234","11:11:11","1","BMW","white","handicap","1"));
+        arr.add(List.of("tn098","12:12:12","2","BMW","white","handicap","1"));
+        Assert.assertEquals(arr,Parkinglot_JDBC.FindBMW("BMW"));
+    }
 }
