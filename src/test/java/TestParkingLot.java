@@ -169,6 +169,15 @@ public class TestParkingLot {
         arr.add(List.of("tn1234","11:11:11","1","BMW","white","handicap","1"));
         arr.add(List.of("tn098","12:12:12","2","BMW","white","handicap","1"));
         Assert.assertEquals(arr,Parkinglot_JDBC.FindHandicap(1,"handicap"));
-
+    }
+    //uc17 all cars a parking lot
+    @Test
+    public void TestAllParkedCarsInALot(){
+        List<List<String>> arr=new ArrayList<>();
+        List<String> arr1=new ArrayList<>();
+        arr.add(List.of("tn3778", "20:37:15", "5", "toyoto", "white", "general", "2"));
+        arr.add(List.of("tn3770","12:55:27","7","audi","black","general","2"));
+        arr.add(List.of("tn3771","12:55:27","8","audi","blue","general","2"));
+        Assert.assertEquals(arr,Parkinglot_JDBC.FindAllCarInALot(2));
     }
 }
